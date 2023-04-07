@@ -5,7 +5,6 @@ import { ChatContext } from "../context/ChatContext";
 const Message = ({ message }) => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
-  console.log(message);
   return (
     <div className={`message ${message?.senderId === currentUser.uid}`}>
       <div className="messageInfo">
@@ -17,12 +16,13 @@ const Message = ({ message }) => {
               : data.user.photoURL
           }
         />
-
-        {console.log(message?.senderId , currentUser)}
-
-        <span>Just Now</span>
       </div>
       <div className="messageContent">
+        <h5>
+          {message?.senderId === currentUser?.uid
+            ? currentUser?.displayName
+            : data?.user?.displayName}
+        </h5>
         <p>{message?.text}</p>
         {message?.img && <img alt="chat" src={message?.img} />}
       </div>

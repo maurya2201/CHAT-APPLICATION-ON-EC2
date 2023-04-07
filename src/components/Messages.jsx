@@ -17,7 +17,6 @@ const Messages = () => {
   }, [data?.chatId]);
   return (
     <div className="messages">
-    {console.log(messages)}
       {messages.map((m) => (
         <Message message={m} key={m?.id} />
       ))}

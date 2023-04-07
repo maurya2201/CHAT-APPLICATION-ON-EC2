@@ -22,19 +22,24 @@ const Input = () => {
       const storageRef = ref(storage, uuid());
       const uploadTask = uploadBytesResumable(storageRef, img);
 
-      uploadTask.on(() => {
-        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-          await updateDoc(doc(db, "chats", data.chatId), {
-            messages: arrayUnion({
-              id: uuid(),
-              text,
-              senderId: currentUser?.uid,
-              date: Timestamp.now(),
-              img: downloadURL,
-            }),
+      uploadTask.on(
+        (error) => {
+          // setError(true);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            await updateDoc(doc(db, "chats", data.chatId), {
+              messages: arrayUnion({
+                id: uuid(),
+                text,
+                senderId: currentUser?.uid,
+                date: Timestamp.now(),
+                img: downloadURL,
+              }),
+            });
           });
-        });
-      });
+        }
+      );
     } else {
       await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion({

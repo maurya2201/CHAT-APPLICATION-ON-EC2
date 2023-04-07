@@ -23,7 +23,7 @@ const Message = ({ message }) => {
             ? currentUser?.displayName
             : data?.user?.displayName}
         </h5>
-        <p>{message?.text}</p>
+        {message?.text &&<p>{message?.text}</p>}
         {message?.img && <img alt="chat" src={message?.img} />}
       </div>
     </div>
